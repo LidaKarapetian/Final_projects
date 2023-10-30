@@ -1,0 +1,83 @@
+Certainly, let's break down the function in detail:
+
+
+data = response.json() #type dict
+
+
+1. **Function Definition:**
+   ```python
+   def get_weather_forecast(city_name, api_key, unit_system, main_url):
+       """
+       This function fetches weather data for a specified city from the OpenWeather API.
+       """
+   ```
+   The function `get_weather_forecast` takes four parameters: `city_name`, `api_key`, `unit_system`, and `main_url`.
+
+2. **Parameters Dictionary:**
+   ```python
+   parameters = {
+       'appid': api_key,
+       'q': city_name,
+       'units': unit_system
+   }
+   ```
+   It creates a dictionary `parameters` that holds the necessary parameters for the API request, including the API key, the city name, and the unit system for the weather data.
+
+3. **API Request:**
+   ```python
+   response = requests.get(main_url, params=parameters)
+   ```
+   It makes a GET request to the specified `main_url` with the parameters provided.
+
+4. **Checking Response Status Code:**
+   ```python
+   if response.status_code == 200:
+       data = response.json()
+       return data
+   ```
+   If the status code of the response is 200, indicating a successful request, it parses the response data as JSON and returns the fetched data.
+
+5. **Error Handling:**
+   ```python
+   print("Error: Status code", response.status_code)
+   return None
+   ```
+   If the response status code is not 200, it prints an error message indicating the status code, and returns `None` to signify that no data was retrieved.
+
+This function is a simple wrapper around the OpenWeather API, allowing you to easily fetch weather data for a specified city. It's important to ensure that you have the necessary API key, and the `requests` library is installed before using this function.
+
+
+Տրամադրված կոդի հատվածում «response»-ն այն փոփոխականն է, որը պահում է «requests.get()» զանգից վերադարձված պատասխան օբյեկտը: Այս «պատասխան» օբյեկտը պարունակում է սերվերի պատասխանը OpenWeather API-ին արված HTTP հարցումին: Ահա թե ինչ կարող եք սովորաբար մուտք գործել «պատասխան» օբյեկտից.
+
+1. **Կարգավիճակի կոդը.** Սա ներկայացնում է պատասխանի HTTP կարգավիճակի կոդը: Այն հասանելի է «response.status_code»-ի միջոցով:
+
+2. **Պատասխանի բովանդակություն.** Սա պատասխանի բովանդակությունն է տեքստի կամ երկուական տվյալների տեսքով: Դուք կարող եք մուտք գործել այն՝ օգտագործելով «response.text»՝ տեքստի վրա հիմնված բովանդակության համար կամ «response.content»՝ երկուական բովանդակության համար:
+
+3. **Արձագանքման վերնագրեր.** Սրանք պատասխանի HTTP վերնագրերն են: Դուք կարող եք մուտք գործել դրանք՝ օգտագործելով «response.headers»:
+
+4. **JSON Տվյալներ.** Եթե պատասխանը պարունակում է JSON տվյալներ, կարող եք ուղղակիորեն մուտք գործել դրանք որպես Python բառարան՝ օգտագործելով «response.json()»:
+
+Տվյալ կոդի հատվածում ծրագիրը ստուգում է պատասխանի «status_code»-ը՝ համոզվելու համար, որ հարցումը հաջողված է (կարգավիճակի կոդը 200): Եթե կարգավիճակի կոդը 200 է, ապա այն ենթադրում է, որ պատասխանը պարունակում է ցանկալի եղանակային տվյալներ JSON ձևաչափով և անցնում է JSON տվյալների վերլուծությանը՝ օգտագործելով «response.json()»: Եթե կարգավիճակի կոդը 200 չէ, ծրագիրը ստատուսի կոդի հետ մեկտեղ տպում է սխալի հաղորդագրություն:
+
+
+main
+«հիմնական» բանալին օգտագործվում է forecast_data-ի ենթաբառարան մուտք գործելու համար, որը պարունակում է եղանակի հիմնական պարամետրերը, ինչպիսիք են ջերմաստիճանը և խոնավությունը:
+     Հատուկ բանալին ['main']['temp'] օգտագործվում է «հիմնական» ենթաբառի ջերմաստիճանի արժեքին մուտք գործելու համար, իսկ ['main']['humidity'] օգտագործվում է խոնավության արժեքին մուտք գործելու համար:
+
+«հիմնական» բանալին օգտագործվում է, քանի որ այն ստանդարտ բանալի է, որը հաճախ օգտագործվում է OpenWeather API-ի արձագանքման կառուցվածքում՝ եղանակի կարևոր պարամետրերը ամփոփելու համար: Օգտագործելով «հիմնականը» որպես բանալի, կոդը մուտք է գործում ջերմաստիճանի և խոնավության տվյալներ forecast_data բառարանում, ինչը թույլ է տալիս արդյունահանել և տպել եղանակի հետ կապված այս հատուկ պարամետրերը:
+
+
+«timeout=10» արգումենտը սահմանում է, որ ծրագիրը սպասարկելու է առավելագույնը 10 վայրկյան, որպեսզի սերվերը պատասխանի: Եթե սերվերը չպատասխանի այս ժամկետում, հարցումը կդադարեցվի, և «Timeout» exseption կբարձրացվի: 
+
+
+Python-ի «argparse» մոդուլում «action='store_true» արգումենտն օգտագործվում է հրամանի տողի արգումենտ սահմանելու համար, որը լրացուցիչ արժեք չի պահանջում: Երբ այս գործողությունը սահմանված է, հրամանի տողի արգումենտի առկայությունը ինքնին ենթադրում է «True» արժեք համապատասխան փոփոխականի համար:
+
+Օրինակ, կոդի հատվածում.
+
+«Պիթոն».
+parser.add_argument('--description', action='store_true', help='Ցուցադրել եղանակի նկարագրությունը')
+```
+
+«--description» արգումենտը դրոշակ է, որը, երբ առկա է հրամանի տողում, ցույց է տալիս, որ օգտատերը ցանկանում է ցույց տալ եղանակի նկարագրությունը: Այս դրոշը չի պահանջում որևէ լրացուցիչ արժեք փոխանցել դրանից հետո: Դրա ուղղակի առկայությունը ենթադրում է «ճշմարիտ» արժեք «args» անվանատարածքում «description» փոփոխականի համար, որը ստեղծվում է «ArgumentParser» օբյեկտի «parse_args()» մեթոդով:
+
+«action='store_true'»-ի օգտագործումը սովորական է հրամանի տողի ընտրանքներ ստեղծելու համար, որոնք գործում են որպես երկուական դրոշներ՝ նշելով որոշակի հատկանիշի կամ պարամետրի առկայությունը կամ բացակայությունը:
